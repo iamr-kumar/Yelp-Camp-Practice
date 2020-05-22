@@ -20,11 +20,12 @@
             <div class="card">
                 <img src="<%= campground.image%>" alt="" class="img-fluid">
                 <div class="card-body">
-                    <div class="card-title d-flex flex-row justify-content-between">
+                    <div class="card-title">
                         <h5><%=campground.name %></h5>
-                        <h5 class="text-right">$9.00/night</h5>
+                        <span><h5 class="float-right">$9.00/night</h5></span>
+                        <p><em>Submitted By <%= campground.author.username %></em></p>
                     </div>
-                   
+                    
                     <p><%= campground.description%></p>
                     
                 </div>
@@ -36,8 +37,8 @@
                 <% campground.comments.forEach(function(comment){ %>
                     <div class="row">
                         <div class="col-md-12">
-                            <strong><%= comment.author %></strong>
-                            <span class="text-right">10 days ago</span>
+                            <strong><%= comment.author.username %></strong>
+                            <span class="float-right">10 days ago</span>
                             <p>
                                 <%= comment.text %>
                             </p>
