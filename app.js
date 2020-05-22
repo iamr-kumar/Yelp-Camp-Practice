@@ -9,6 +9,10 @@ const express = require("express"),
       User = require("./models/user"),
       seedDB = require("./seeds");
 
+var commentRoutes = require("./routes/comments"),
+    campgroundRoutes = require("./routes/campgrounds"),
+    indexRoutes = require("./routes/index");
+
 seedDB();
 
 mongoose.set('useNewUrlParser', true);
@@ -16,13 +20,13 @@ mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 mongoose.set('useUnifiedTopology', true);
 
-mongoose.connect("mongodb://127.0.0.1:27017/Yelp_Camp_v3");
-
-// Schema Setup
+mongoose.connect("mongodb://127.0.0.1:27017/Yelp_Camp_v5");
 
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
+
+app.set("view engine", "ejs");
 
 // ------Passport Config--------------
 app.use(require("express-session")({
@@ -30,6 +34,7 @@ app.use(require("express-session")({
     resave: false,
     saveUninitialized: false
 }));
+
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -40,12 +45,11 @@ passport.deserializeUser(User.deserializeUser());
 app.use(function(req, res, next){
     res.locals.currentUser = req.user;
     next();
-})
+});
 
-// --------------------------------------
-
-app.set("view engine", "ejs");
-
+app.use(commentRoutes);
+app.use(campgroundRoutes);
+app.use(indexRoutes);
 
 
 app.listen(3000, function(){
