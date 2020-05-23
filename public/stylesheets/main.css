@@ -1,0 +1,20 @@
+.form-style{
+    width: 70%; margin: 30px auto;
+}
+
+.campground-heading{
+    text-align: center;
+}
+
+.delete-form{
+    display: inline;
+}
+
+.campground-desc{
+    padding: 0 1.2rem;
+}
+
+.comments-div{
+    width: 30%; 
+    margin: 30px auto;
+}

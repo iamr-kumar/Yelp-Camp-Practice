@@ -7,13 +7,14 @@ const express = require("express"),
       passport = require("passport"),
       LocalStrategy = require("passport-local"),
       User = require("./models/user"),
+      methodOverride = require("method-override"),
       seedDB = require("./seeds");
 
 var commentRoutes = require("./routes/comments"),
     campgroundRoutes = require("./routes/campgrounds"),
     indexRoutes = require("./routes/index");
 
-seedDB();
+
 
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
@@ -22,9 +23,12 @@ mongoose.set('useUnifiedTopology', true);
 
 mongoose.connect("mongodb://127.0.0.1:27017/Yelp_Camp_v5");
 
+// seedDB();
+
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
+app.use(methodOverride("_method"));
 
 app.set("view engine", "ejs");
 
