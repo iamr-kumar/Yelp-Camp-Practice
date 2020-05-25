@@ -18,3 +18,12 @@
     width: 30%; 
     margin: 30px auto;
 }
+
+.form-header{
+    text-align: center;
+}
+
+.login-form-style{
+    width: 50%;
+    margin: 30px auto;
+}
