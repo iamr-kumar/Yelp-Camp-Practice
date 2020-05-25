@@ -15,6 +15,11 @@ var commentRoutes = require("./routes/comments"),
     campgroundRoutes = require("./routes/campgrounds"),
     indexRoutes = require("./routes/index");
 
+var port = process.env.PORT;
+if(port == null || port ==""){
+    port = 3000;
+}
+
 
 
 mongoose.set('useNewUrlParser', true);
@@ -60,6 +65,6 @@ app.use(campgroundRoutes);
 app.use(indexRoutes);
 
 
-app.listen(3000, function(){
+app.listen(port, function(){
     console.log("YelpCamp has started!");
 });
