@@ -22,8 +22,9 @@ mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 mongoose.set('useUnifiedTopology', true);
 
-// mongoose.connect("mongodb://127.0.0.1:27017/Yelp_Camp_v5");
-mongoose.connect("mongodb+srv://zacker29:iamzacker29@firstcluster-vypcq.mongodb.net/test?retryWrites=true&w=majority");
+mongoose.connect(process.env.MONGODB_URI).then(
+    () => console.log("connection successful!")
+);
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
