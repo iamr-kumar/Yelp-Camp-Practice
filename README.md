@@ -1,4 +1,3 @@
 # Yelp-Camp-Practice
-This is me learning Node.js
-Coding along a course on Udemy. This is a basic node.js app built on express that contains info about various
-campgrounds that are added and maintainer by various users.
+This is my first Node.js project where I try to implement the various concepts I learned about the topic.
+A simple app to view, add, edit and remove a few details along with user authentication
