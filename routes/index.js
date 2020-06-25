@@ -53,16 +53,16 @@ router.post("/register", function(req, res){
     }
     else{
 
-        User.findOne({username: username})
+        User.findOne().or([{username: username}, {email: email}])
             .then(user => {
                 if(user){
-                    // if(users[0].email === email){
-                    //     errors.push({message: 'Email already taken!'});
-                    // }
-                    // else if(users[0].username === username){
-                    //     errors.push({message: 'Username already taken!'});
-                    // }
-                    errors.push({message: 'Username already taken!'});
+                    if(user.email === email){
+                        errors.push({message: 'Email already taken!'});
+                    }
+                    else if(user.username === username){
+                        errors.push({message: 'Username already taken!'});
+                    }
+                    // errors.push({message: 'Username already taken!'});
                     res.render("register", {
                         errors,
                         firstName,
