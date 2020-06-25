@@ -16,17 +16,85 @@ router.get("/register", function(req, res){
 });
 
 router.post("/register", function(req, res){
-    var newUser = new User({username: req.body.username});
-    User.register(newUser, req.body.password, function(err, user){
-        if(err){
-            req.flash("error", err.message);
-            return res.render("register");
-        }
-        passport.authenticate("local")(req, res, function(){
-            req.flash("success", "Successully signed in!")
-            res.redirect("/campgrounds");
+    const firstName = req.body.firstName,
+          lastName = req.body.lastName,
+          email = req.body.email,
+          username = req.body.username,
+          password = req.body.password,
+          confirmPassword = req.body.confirmPassword;
+
+    // console.log(username);
+    
+    var errors = [];
+    if(!username || !email || !firstName || !lastName || !password || !confirmPassword){
+        errors.push({message: 'Please fill in all the fields!'});
+    }
+
+    // Check Password Match
+
+    if(password !== confirmPassword){
+        errors.push({message: 'Passwords do not match!'});
+    }
+
+    // Check Password length
+
+    if(password.length < 8){
+        errors.push({message: 'Password should be atleast 8 characters!'})
+    }
+
+    if(errors.length > 0){
+        res.render("register", {
+            errors,
+            firstName,
+            lastName,
+            email,
+            username
         });
-    });
+    }
+    else{
+
+        User.findOne({username: username})
+            .then(user => {
+                if(user){
+                    // if(users[0].email === email){
+                    //     errors.push({message: 'Email already taken!'});
+                    // }
+                    // else if(users[0].username === username){
+                    //     errors.push({message: 'Username already taken!'});
+                    // }
+                    errors.push({message: 'Username already taken!'});
+                    res.render("register", {
+                        errors,
+                        firstName,
+                        lastName,
+                        email,
+                        username
+                    });                
+                }
+                else{
+                    const newUser = new User({
+                        username: username,
+                        email: email,
+                        firstName: firstName,
+                        lastName: lastName,
+                        password: password
+                    });
+                    User.register(newUser, req.body.password, function(err, user){
+                        if(err){
+                            req.flash("error", err.message);
+                            return res.render("register");
+                        }
+                        passport.authenticate("local")(req, res, function(){
+                            req.flash("success", "Successully signed in!")
+                            res.redirect("/campgrounds");
+                        });
+                    });
+                }
+
+            })
+    }
+
+    
 });
 
 // Login form
