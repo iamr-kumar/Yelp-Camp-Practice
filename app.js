@@ -5,7 +5,7 @@ const express = require("express"),
       Campground = require("./models/campgrounds"),
       Comment = require("./models/comments"),
       passport = require("passport"),
-      LocalStrategy = require("passport-local"),
+      LocalStrategy = require("passport-local").Strategy,
       User = require("./models/user"),
       methodOverride = require("method-override"),
       flash = require("connect-flash");
@@ -22,7 +22,7 @@ mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 mongoose.set('useUnifiedTopology', true);
 
-mongoose.connect(process.env.MONGODB_URI).then(
+mongoose.connect("mongodb://127.0.0.1:27017/Yelp_Camp_v5").then(
     () => console.log("connection successful!")
 );
 
@@ -43,9 +43,14 @@ app.use(require("express-session")({
 
 app.use(passport.initialize());
 app.use(passport.session());
+
 passport.use(new LocalStrategy(User.authenticate()));
+
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+
+
+
 
 app.use(function(req, res, next){
     res.locals.currentUser = req.user;
