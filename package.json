@@ -4,7 +4,8 @@
   "description": "Yelp Camp v1",
   "main": "app.js",
   "scripts": {
-    "test": "Ritik"
+    "test": "Ritik",
+    "start": "node app.js"
   },
   "author": "Ritik",
   "license": "ISC",
