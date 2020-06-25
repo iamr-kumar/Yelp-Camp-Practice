@@ -23,8 +23,7 @@ router.post("/register", function(req, res){
           password = req.body.password,
           confirmPassword = req.body.confirmPassword;
 
-    // console.log(username);
-    
+    // Verify Fields 
     var errors = [];
     if(!username || !email || !firstName || !lastName || !password || !confirmPassword){
         errors.push({message: 'Please fill in all the fields!'});
@@ -42,6 +41,8 @@ router.post("/register", function(req, res){
         errors.push({message: 'Password should be atleast 8 characters!'})
     }
 
+    // Check for errors
+
     if(errors.length > 0){
         res.render("register", {
             errors,
@@ -51,8 +52,10 @@ router.post("/register", function(req, res){
             username
         });
     }
+
     else{
 
+        // Check if username or email taken
         User.findOne().or([{username: username}, {email: email}])
             .then(user => {
                 if(user){
@@ -62,7 +65,6 @@ router.post("/register", function(req, res){
                     else if(user.username === username){
                         errors.push({message: 'Username already taken!'});
                     }
-                    // errors.push({message: 'Username already taken!'});
                     res.render("register", {
                         errors,
                         firstName,
@@ -72,6 +74,7 @@ router.post("/register", function(req, res){
                     });                
                 }
                 else{
+                    // Create new user
                     const newUser = new User({
                         username: username,
                         email: email,
@@ -79,6 +82,8 @@ router.post("/register", function(req, res){
                         lastName: lastName,
                         password: password
                     });
+
+                    // Register user
                     User.register(newUser, req.body.password, function(err, user){
                         if(err){
                             req.flash("error", err.message);
