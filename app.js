@@ -13,7 +13,8 @@ const express = require("express"),
 
 var commentRoutes = require("./routes/comments"),
     campgroundRoutes = require("./routes/campgrounds"),
-    indexRoutes = require("./routes/index");
+    indexRoutes = require("./routes/index"),
+    userRoutes = require("./routes/user");
 
 
 
@@ -62,6 +63,7 @@ app.use(function(req, res, next){
 app.use(commentRoutes);
 app.use(campgroundRoutes);
 app.use(indexRoutes);
+app.use(userRoutes);
 
 var port = process.env.PORT;
 if(port == null || port ==""){

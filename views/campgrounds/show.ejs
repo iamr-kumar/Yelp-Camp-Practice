@@ -23,8 +23,7 @@
                     <div class="card-title">
                         <h5><%=campground.name %></h5>
                         <span><h5 class="float-right">$<%=campground.price%>/night</h5></span>
-                        <p><em>Submitted By <%= campground.author.username %></em></p>
-                        
+                        <p><em>Submitted By <a href="/users/<%=campground.author.id%>"><%= campground.author.username %></a> </em></p>
                         <% if(currentUser && campground.author.id.equals(currentUser._id)){ %>
                             <a class="btn btn-outline-info btn-sm" href="/campgrounds/<%=campground._id%>/edit">Edit</a>
                             <form action="/campgrounds/<%=campground._id%>?_method=DELETE" class= "delete-form" method="POST">
