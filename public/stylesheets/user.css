@@ -1,0 +1,38 @@
+.user-info{
+    background-color: rgb(221, 220, 220);
+    height: 100vh;
+}
+
+.user-details{
+    text-align: center;
+    margin-top: 50px;
+}
+
+.user-image img{
+    width: 70%;
+    height: 100%;
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+
+.user-name h3{
+    margin-bottom: 0;
+    text-transform: uppercase;
+}
+
+.user-name p{
+    font-style: italic;
+}
+
+.social-links span{
+    font-size: 1.2rem;
+    margin: 10px 10px;
+}
+
+.fab{
+    color: rgb(48, 46, 46);
+}
+
+.bio-text p{
+    font-style: italic;
+}

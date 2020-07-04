@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yelp Camp</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="/stylesheets/main.css">
+    <link rel="stylesheet" href="/stylesheets/user.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.1/css/all.css" integrity="sha384-xxzQGERXS00kBmZW/6qxqJPyxW3UR0BPsL4c8ILaIWXva5kFi7TxkIIaMiKtqV1Q" crossorigin="anonymous">
+</head>
+<body style="box-sizing: border-box;">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a href="/" class="navbar-brand">Yelp Camp</a>
+            </div>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a href="/campgrounds" class="nav-link">Home</a>
+                </li>
+            </ul>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <% if(!currentUser){ %>
+                        <li class="nav-item">
+                            <a href="/login" class="nav-link">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/register" class="nav-link">Sign Up</a>
+                        </li>
+                    <% } else{ %>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link"><%= currentUser.firstName + ' ' + currentUser.lastName %></a></li>
+                        <li class="nav-item">
+                            <a href="/logout" class="nav-link">Logout</a>
+                        </li>
+                    <% } %>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 user-info">
+                <div class="container">
+                    <div class="user-details">
+                        <div class="user-image">
+                            <img class="img-circle" src="https://images.unsplash.com/photo-1572965733194-784e4b4efa45?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" alt="">
+                        </div>
+                        <div class="user-name">
+                            <h3><%=user.firstName + ' ' + user.lastName%></h3>
+                            <p>@<%=user.username%></p>
+                        </div>
+                        <div class="social-links">
+                            <span><a href="#"><i class="fab fa-facebook"></i></a></i></span>
+                            <span><a href="#"><i class="fab fa-instagram"></i></a></i></span>
+                            <span><a href="#"><i class="fab fa-twitter"></i></a></i></span>
+                        </div>
+                        <div class="user-bio mt-5">
+                            <hr>
+                            <div class="bio-text">
+                                <p>
+                                    Born to Travel. Love to Explore.
+                                </p>
+                            </div>
+                            <hr>
+                        </div>    
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="container">
+                    <h3 class="my-5"><%= user.firstName %>'s Campgrounds</h3>
+                    <% if(campgrounds.length > 0) { %>
+                        <div class="row d-flex flex-wrap">
+                            <% campgrounds.forEach(function(campground){ %>
+                                <div class="col-lg-4 col-md-6 my-3">
+                                    <div class="card img-thumbnail">
+                                        <img class="card-img-top" src="<%= campground.image%>" alt="Photo" style="width: 100%; height: 40vh; object-fit: cover;">
+                                        <div class="caption">
+                                            <h4 class="card-title"><%= campground.name %></h4>
+                                            <p>
+                                                <a href="/campgrounds/<%=campground._id%>" class= "btn btn-primary">More Info</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% }) %>
+                    
+                        </div>
+                    <% }  else {%>
+                            <h6>No Campgrounds Yet</h6>
+
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<%- include("../partials/footer") %>
